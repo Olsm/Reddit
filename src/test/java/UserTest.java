@@ -28,7 +28,7 @@ public class UserTest {
     }
 
     @Test
-    public void testUser() {
+    public void testUserConstructor() {
         new User("SuchUser", "Very Address", "So Name", "very@shibe.wow");
         User user = em.find(User.class, "SuchUser");
         assertEquals("SuchUser", user.getUsername());
