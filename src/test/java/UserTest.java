@@ -29,26 +29,33 @@ public class UserTest {
 
     @Test
     public void testUser() {
-
+        new User("SuchUser", "Very Address", "So Name", "very@shibe.wow");
+        User user = em.find(User.class, "SuchUser");
+        assertEquals("SuchUser", user.getUsername());
+        assertEquals("Very Address", user.getAddress());
+        assertEquals("So Name", user.getName());
+        assertEquals("very@shibe.wow", user.getEmail());
     }
 
     @Test
     public void setAddress() throws Exception {
         String address = "Dyretråkket 24, 1251 Oslo";
-        user.setAddress(address);
+        assertTrue(user.setAddress(address));
         assertEquals(address, user.getAddress());
-        em.clear();
-        assertEquals(address, em.find(User.class, user.getUsername()).getAddress());
     }
 
     @Test
     public void setName() throws Exception {
-
+        String name = "Olav Småriset";
+        assertTrue(user.setName(name));
+        assertEquals(name, user.getName());
     }
 
     @Test
     public void setEmail() throws Exception {
-
+        String email = "olavolsm@gmail.com";
+        assertTrue(user.setEmail(email));
+        assertEquals(email, user.getEmail());
     }
 
 }

@@ -12,6 +12,24 @@ public class User {
     private String name;
     private String email;
 
+    public User(String username, String address, String name, String email) {
+        this.username = username;
+        this.address = address;
+        this.name = name;
+        this.email = email;
+
+        dbHelper = new DBHelper();
+        dbHelper.persistInATransaction(this);
+    }
+
+    public User (String username) {
+        this(username, null, null, null);
+    }
+
+    public User() {
+        this(null, null, null, null);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -28,33 +46,19 @@ public class User {
         return email;
     }
 
-    public void setAddress(String address) {
+    public boolean setAddress(String address) {
         this.address = address;
-        dbHelper.persistInATransaction(this);
+        return dbHelper.persistInATransaction(this);
     }
 
-    public void setName(String name) {
+    public boolean setName(String name) {
         this.name = name;
-        dbHelper.persistInATransaction(this);
+        return dbHelper.persistInATransaction(this);
     }
 
-    public void setEmail(String email) {
+    public boolean setEmail(String email) {
         this.email = email;
-        dbHelper.persistInATransaction(this);
-    }
-
-    public User(String username, String address, String name, String email) {
-        this.username = username;
-        this.address = address;
-
-        this.name = name;
-        this.email = email;
-
-        //dbHelper.persistInATransaction(this);
-    }
-
-    public User (String username) {
-        this(username, null, null, null);
+        return dbHelper.persistInATransaction(this);
     }
 
 }
