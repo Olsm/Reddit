@@ -2,6 +2,9 @@ import org.junit.*;
 
 import javax.persistence.EntityManager;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class PostTest {
@@ -16,37 +19,45 @@ public class PostTest {
     }
 
     @AfterClass
-    public static void tearDown() throws Exception {
+    public static void tearDownAfter() throws Exception {
         dbH.close();
     }
 
     @Before
     public void setUp() {
-        post = new Post("SuchUser", "Much content");
+        post = new Post();
+        dbH.persistInATransaction(post);
     }
 
     @Test
     public void testPostConstructor() {
-        Post post = em.find(Post.class, this.post.getId());
+        Post post = new Post("SuchUser", "Much content");
+        assertTrue(dbH.persistInATransaction(post));
         assertEquals("SuchUser", post.getAuthor());
         assertEquals("Much content", post.getContent());
-        assertEquals("lol", post.getDate());
+        assertTrue(new Date().getTime() >= post.getDate().getTime() );
         assertEquals(0, post.getVotes());
     }
 
     @Test
     public void setContent() throws Exception {
-
+        post.setContent("Much content");
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals("Much content", post.getContent());
     }
 
     @Test
     public void upVote() throws Exception {
-
+        post.upVote();
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals(1, post.getVotes());
     }
 
     @Test
     public void downVote() throws Exception {
-
+        post.downVote();
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals(-1, post.getVotes());
     }
 
 }

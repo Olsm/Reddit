@@ -8,13 +8,15 @@ import static org.junit.Assert.*;
 
 public class UserTest {
     private static DBHelper dbH;
-    private User user;
+    private static User user;
     private static EntityManager em;
 
     @BeforeClass
     public static void setUpBefore() throws Exception {
         dbH = new DBHelper();
         em = dbH.getEntityManager();
+        user = new User("SuchUser");
+        dbH.persistInATransaction(user);
     }
 
     @AfterClass
@@ -22,16 +24,12 @@ public class UserTest {
         dbH.close();
     }
 
-    @Before
-    public void setUp() {
-        user = new User("SuchUser");
-    }
-
     @Test
     public void testUserConstructor() {
-        new User("SuchUser", "Very Address", "So Name", "very@shibe.wow");
-        User user = em.find(User.class, "SuchUser");
-        assertEquals("SuchUser", user.getUsername());
+        User u = new User("SoUser", "Very Address", "So Name", "very@shibe.wow");
+        assertTrue(dbH.persistInATransaction(u));
+        User user = em.find(User.class, u.getUsername());
+        assertEquals("SoUser", user.getUsername());
         assertEquals("Very Address", user.getAddress());
         assertEquals("So Name", user.getName());
         assertEquals("very@shibe.wow", user.getEmail());
@@ -40,21 +38,24 @@ public class UserTest {
     @Test
     public void setAddress() throws Exception {
         String address = "Dyretråkket 24, 1251 Oslo";
-        assertTrue(user.setAddress(address));
+        user.setAddress(address);
+        assertTrue(dbH.persistInATransaction(user));
         assertEquals(address, user.getAddress());
     }
 
     @Test
     public void setName() throws Exception {
         String name = "Olav Småriset";
-        assertTrue(user.setName(name));
+        user.setName(name);
+        assertTrue(dbH.persistInATransaction(user));
         assertEquals(name, user.getName());
     }
 
     @Test
     public void setEmail() throws Exception {
         String email = "olavolsm@gmail.com";
-        assertTrue(user.setEmail(email));
+        user.setEmail(email);
+        assertTrue(dbH.persistInATransaction(user));
         assertEquals(email, user.getEmail());
     }
 

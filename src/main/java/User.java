@@ -4,8 +4,6 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-    @Embedded
-    DBHelper dbHelper;
     @Id
     private String username;
     private String address;
@@ -17,9 +15,6 @@ public class User {
         this.address = address;
         this.name = name;
         this.email = email;
-
-        dbHelper = new DBHelper();
-        dbHelper.persistInATransaction(this);
     }
 
     public User (String username) {
@@ -46,19 +41,16 @@ public class User {
         return email;
     }
 
-    public boolean setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
-        return dbHelper.persistInATransaction(this);
     }
 
-    public boolean setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return dbHelper.persistInATransaction(this);
     }
 
-    public boolean setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return dbHelper.persistInATransaction(this);
     }
 
 }

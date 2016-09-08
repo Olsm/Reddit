@@ -1,15 +1,10 @@
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Post {
-    @Embedded
-    DBHelper dbHelper;
     @Id @GeneratedValue
-    private int id;
+    private Integer id;
     private String author;
     private String content;
     private Date date;
@@ -27,12 +22,9 @@ public class Post {
         this.date = new Date();
         this.upVotes = 0;
         this.downVotes = 0;
-
-        dbHelper = new DBHelper();
-        dbHelper.persistInATransaction(this);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -52,18 +44,19 @@ public class Post {
         return upVotes - downVotes;
     }
 
-    public boolean setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
-        return dbHelper.persistInATransaction(this);
     }
 
-    public boolean upVote() {
+    public void upVote() {
         this.upVotes++;
-        return dbHelper.persistInATransaction(this);
     }
 
-    public boolean downVote() {
+    public void downVote() {
         this.downVotes++;
-        return dbHelper.persistInATransaction(this);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
