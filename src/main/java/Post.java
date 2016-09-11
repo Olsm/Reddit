@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@NamedQueries(
-        @NamedQuery(name = Post.SUM_POSTS, query = "select sum(p) from Post p"),
-        @NamedQuery(name = Post.SUM_POSTS_IN_NORWAY, query = "select sum(p) from Post u where u.address.country = 'Norway'")
-)
+@NamedQueries({
+        @NamedQuery(name = Post.SUM_POSTS, query = "select count(p) from Post p"),
+        @NamedQuery(name = Post.SUM_POSTS_IN_NORWAY, query = "select count(p) from Post p where p.author.address.country = 'Norway'")
+})
 
 @Entity
 public class Post {
@@ -16,7 +16,7 @@ public class Post {
 
     @Id @GeneratedValue
     private Long id;
-    private String author;
+    @ManyToOne private User author;
     private String content;
     private Date date;
     private int upVotes;
@@ -28,7 +28,7 @@ public class Post {
         this(null, null);
     }
 
-    public Post(String author, String content) {
+    public Post(User author, String content) {
         this.author = author;
 
         this.content = content;
@@ -41,7 +41,7 @@ public class Post {
         return id;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 

@@ -26,18 +26,19 @@ public class UserTest {
 
     @Test
     public void testUserConstructor() {
-        User u = new User("SoUser", "Very Address", "So Name", "very@shibe.wow");
+        User u = new User("SoUser", new Address("SuchCity", "VeryCountry"), "So Name", "very@shibe.wow");
         assertTrue(dbH.persistInATransaction(u));
         User user = em.find(User.class, u.getUsername());
         assertEquals("SoUser", user.getUsername());
-        assertEquals("Very Address", user.getAddress());
+        assertEquals("SuchCity", user.getAddress().getCity());
+        assertEquals("VeryCountry", user.getAddress().getCountry());
         assertEquals("So Name", user.getName());
         assertEquals("very@shibe.wow", user.getEmail());
     }
 
     @Test
     public void setAddress() throws Exception {
-        String address = "Dyretråkket 24, 1251 Oslo";
+        Address address = new Address("Oslo", "Norway");
         user.setAddress(address);
         assertTrue(dbH.persistInATransaction(user));
         assertEquals(address, user.getAddress());

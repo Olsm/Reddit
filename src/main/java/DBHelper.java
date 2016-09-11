@@ -1,10 +1,7 @@
 import javax.persistence.*;
 
-@Embeddable
 public class DBHelper {
-    @Embedded
     private EntityManagerFactory emFactory;
-    @Embedded
     private EntityManager em;
 
     public DBHelper() {

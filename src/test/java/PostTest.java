@@ -33,9 +33,11 @@ public class PostTest {
 
     @Test
     public void testPostConstructor() {
-        Post post = new Post("SuchUser", "Much content");
+        User user = new User("SuchUser");
+        dbH.persistInATransaction(user);
+        Post post = new Post(user, "Much content");
         assertTrue(dbH.persistInATransaction(post));
-        assertEquals("SuchUser", post.getAuthor());
+        assertEquals("SuchUser", post.getAuthor().getUsername());
         assertEquals("Much content", post.getContent());
         assertTrue(new Date().getTime() >= post.getDate().getTime() );
         assertEquals(0, post.getVotes());
