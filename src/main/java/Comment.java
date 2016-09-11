@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Post {
+public class Comment {
     @Id @GeneratedValue
     private Long id;
     private String author;
@@ -15,13 +15,12 @@ public class Post {
     @OneToMany
     private List<Comment> comments;
 
-    public Post() {
+    public Comment() {
         this(null, null);
     }
 
-    public Post(String author, String content) {
+    public Comment(String author, String content) {
         this.author = author;
-
         this.content = content;
         this.date = new Date();
         this.upVotes = 0;
@@ -32,25 +31,21 @@ public class Post {
         return id;
     }
 
-    public String getAuthor() {
-        return author;
+    public Date getDate() {
+        return date;
     }
 
-    public List<Comment> getComments() {
-        if(comments != null) return comments;
-        return new ArrayList<Comment>();
+    public String getAuthor() {
+        return author;
     }
 
     public String getContent() {
         return content;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public int getVotes() {
-        return upVotes - downVotes;
+    public List<Comment> getComments() {
+        if(comments != null) return comments;
+        return new ArrayList<Comment>();
     }
 
     public void setContent(String content) {
@@ -59,6 +54,11 @@ public class Post {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public int getVotes() {
+        return upVotes - downVotes;
+
     }
 
     public void upVote() {

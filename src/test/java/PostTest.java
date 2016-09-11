@@ -3,7 +3,9 @@ import org.junit.*;
 import javax.persistence.EntityManager;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -58,6 +60,18 @@ public class PostTest {
         post.downVote();
         assertTrue(dbH.persistInATransaction(post));
         assertEquals(-1, post.getVotes());
+    }
+
+    @Test
+    public void setComment() {
+        List<Comment> comments = new ArrayList<Comment>();
+        assertEquals(comments, post.getComments());
+        Comment comment = new Comment();
+        dbH.persistInATransaction(comment);
+        comments.add(comment);
+        post.setComments(comments);
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals(comments, post.getComments());
     }
 
 }
