@@ -3,8 +3,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@NamedQueries(
+        @NamedQuery(name = Post.SUM_POSTS, query = "select sum(p) from Post p"),
+        @NamedQuery(name = Post.SUM_POSTS_IN_NORWAY, query = "select sum(p) from Post u where u.address.country = 'Norway'")
+)
+
 @Entity
 public class Post {
+
+    public static final String SUM_POSTS = "SUM_POSTS";
+    public static final String SUM_POSTS_IN_NORWAY = "SUM_POSTS_IN_NORWAY";
+
     @Id @GeneratedValue
     private Long id;
     private String author;

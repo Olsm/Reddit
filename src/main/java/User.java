@@ -1,12 +1,24 @@
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+@NamedQueries(
+        @NamedQuery(name = User.SUM_USERS, query = "select sum(u) from User u"),
+        @NamedQuery(name = User.SUM_USERS_IN_NORWAY, query = "select sum(u) from User u where u.address.country = 'Norway'"),
+        @NamedQuery(name = User.GET_COUNTRIES, query = "select u.address.country from User u"),
+        @NamedQuery(name = User.TOP_TEN_USERS, query = "select u from User u order by " +
+                "((select sum(p) from Post where author = u) + " + "(select sum(c) from Comment where author = u)) limit 10")
+)
 
 @Entity
 public class User {
+
+    public static final String SUM_USERS = "SUM_USERS";
+    public static final String SUM_USERS_IN_NORWAY = "SUM_USERS_IN_NORWAY";
+    public static final String GET_COUNTRIES = "GET_COUNTRIES";
+    public static final String TOP_TEN_USERS = "TOP_TEN_USERS";
+
     @Id
     private String username;
-    private String address;
+    private String address; //TODO: Make address embedded
     private String name;
     private String email;
 
