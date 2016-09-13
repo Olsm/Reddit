@@ -30,11 +30,11 @@ public class Post {
 
     public Post(User author, String content) {
         this.author = author;
-
         this.content = content;
         this.date = new Date();
         this.upVotes = 0;
         this.downVotes = 0;
+        comments = new ArrayList<Comment>();
     }
 
     public Long getId() {
@@ -46,8 +46,7 @@ public class Post {
     }
 
     public List<Comment> getComments() {
-        if(comments != null) return comments;
-        return new ArrayList<Comment>();
+        return comments;
     }
 
     public String getContent() {

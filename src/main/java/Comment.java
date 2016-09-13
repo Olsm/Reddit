@@ -25,6 +25,7 @@ public class Comment {
         this.date = new Date();
         this.upVotes = 0;
         this.downVotes = 0;
+        this.comments = new ArrayList<Comment>();
     }
 
     public Long getId() {
@@ -44,8 +45,7 @@ public class Comment {
     }
 
     public List<Comment> getComments() {
-        if(comments != null) return comments;
-        return new ArrayList<Comment>();
+        return comments;
     }
 
     public void setContent(String content) {
