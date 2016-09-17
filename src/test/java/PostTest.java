@@ -55,6 +55,8 @@ public class PostTest {
         post.upVote();
         assertTrue(dbH.persistInATransaction(post));
         assertEquals(1, post.getVotes());
+        assertEquals(1, post.getUpVotes());
+        assertEquals(0, post.getDownVotes());
     }
 
     @Test
@@ -62,6 +64,8 @@ public class PostTest {
         post.downVote();
         assertTrue(dbH.persistInATransaction(post));
         assertEquals(-1, post.getVotes());
+        assertEquals(0, post.getUpVotes());
+        assertEquals(1, post.getDownVotes());
     }
 
     @Test

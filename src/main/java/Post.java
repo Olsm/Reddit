@@ -76,4 +76,12 @@ public class Post {
     public void downVote() {
         this.downVotes++;
     }
+
+    public int getUpVotes() {
+        return upVotes;
+    }
+
+    public int getDownVotes() {
+        return downVotes;
+    }
 }
