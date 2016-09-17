@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Email;
 
 @NamedQueries({
         @NamedQuery(name = User.SUM_USERS, query = "select count(u) from User u"),
@@ -20,12 +22,16 @@ public class User {
     public static final String GET_COUNTRIES = "GET_COUNTRIES";
     public static final String TOP_TEN_USERS = "TOP_TEN_USERS";
 
-    @Id private String username;
+    @Id @Pattern(regexp = "^(?i)[A-Z0-9_-]{3,15}$")
+    private String username;
     @Embedded private Address address;
     private String name;
+    @Email // @Pattern(regexp = ".*?\\.(?i)[A-Z0-9].*") // valid email must end with .something
     private String email;
 
     public User(String username, Address address, String name, String email) {
+        if (username != null) username = username.toLowerCase();
+        if (email != null) email = email.toLowerCase();
         this.username = username;
         this.address = address;
         this.name = name;

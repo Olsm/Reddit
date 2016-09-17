@@ -11,14 +11,19 @@ import static org.junit.Assert.*;
 
 public class UserTest {
     private static DBHelper dbH;
-    private static User user;
     private static EntityManager em;
+    private static int userNameCounter = 0;
+    private User user;
 
     @BeforeClass
     public static void setUpBefore() throws Exception {
         dbH = new DBHelper();
         em = dbH.getEntityManager();
-        user = new User("SuchUser");
+    }
+
+    @Before
+    public void setUp(){
+        user = new User("SuchUser" + userNameCounter++);
         dbH.persistInATransaction(user);
     }
 
@@ -29,10 +34,10 @@ public class UserTest {
 
     @Test
     public void testUserConstructor() {
-        User u = new User("SoUser", new Address("SuchCity", "VeryCountry"), "So Name", "very@shibe.wow");
+        User u = new User("souser", new Address("SuchCity", "VeryCountry"), "So Name", "very@shibe.wow");
         assertTrue(dbH.persistInATransaction(u));
         User user = em.find(User.class, u.getUsername());
-        assertEquals("SoUser", user.getUsername());
+        assertEquals("souser", user.getUsername());
         assertEquals("SuchCity", user.getAddress().getCity());
         assertEquals("VeryCountry", user.getAddress().getCountry());
         assertEquals("So Name", user.getName());
@@ -61,6 +66,28 @@ public class UserTest {
         user.setEmail(email);
         assertTrue(dbH.persistInATransaction(user));
         assertEquals(email, user.getEmail());
+    }
+
+    @Test
+    public void setInvalidEmail() throws Exception {
+        user.setEmail("invalidemail.com");
+        assertFalse(dbH.persistInATransaction(user));
+        user.setEmail("anotherinvalidemail");
+        assertFalse(dbH.persistInATransaction(user));
+        user.setEmail("stillThisIs@nInvalidEmail");
+        assertFalse(dbH.persistInATransaction(user));
+    }
+
+    @Test
+    public void setInvalidUsername() throws Exception {
+        user = new User("");
+        assertFalse(dbH.persistInATransaction(user));
+        user = new User("iv");
+        assertFalse(dbH.persistInATransaction(user));
+        user = new User("qwertyuiopåasdfg");
+        assertFalse(dbH.persistInATransaction(user));
+        user = new User("#test");
+        assertFalse(dbH.persistInATransaction(user));
     }
 
 }
