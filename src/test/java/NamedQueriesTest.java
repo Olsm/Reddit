@@ -48,7 +48,8 @@ public class NamedQueriesTest {
 
     @Test
     public void testSumUsersInNorway(){
-        Query query = em.createNamedQuery(User.SUM_USERS_IN_NORWAY);
+        Query query = em.createNamedQuery(User.SUM_USERS_IN_COUNTRY);
+        query.setParameter("country", "Norway");
         int result = ((Number)query.getSingleResult()).intValue();
         assertEquals(0, result);
 
@@ -84,6 +85,7 @@ public class NamedQueriesTest {
     @Test
     public void testTopTenUsers(){
         Query query = em.createNamedQuery(User.TOP_TEN_USERS);
+        System.out.println(query.toString());
         List<User> users = query.getResultList();
         assertEquals(0, users.size());
 

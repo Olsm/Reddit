@@ -39,7 +39,7 @@ public class PostTest {
         assertTrue(dbH.persistInATransaction(post));
         assertEquals("SuchUser", post.getAuthor().getUsername());
         assertEquals("Much content", post.getContent());
-        assertTrue(new Date().getTime() >= post.getDate().getTime() );
+        assertTrue(new Date().getTime() >= post.getDate().getTime());
         assertEquals(0, post.getVotes());
     }
 
