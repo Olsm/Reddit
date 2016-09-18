@@ -1,7 +1,6 @@
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import org.hibernate.validator.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +18,7 @@ public class Post {
 
     @Id @GeneratedValue private Long id;
     @ManyToOne private User author;
-    @NotNull @Column(length = 50000) private String content;
+    @NotEmpty @Column(length = 50000) private String content;
     @Past private Date date;
     private int upVotes;
     private int downVotes;

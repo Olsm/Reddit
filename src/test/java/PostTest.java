@@ -51,10 +51,6 @@ public class PostTest {
         post.setContent(content);
         assertTrue(dbH.persistInATransaction(post));
         assertEquals(content, post.getContent());
-        content = generateContent(50000);
-        post.setContent(content);
-        assertTrue(dbH.persistInATransaction(post));
-        assertEquals(content, post.getContent());
     }
 
     @Test
@@ -88,11 +84,20 @@ public class PostTest {
     }
 
     @Test
-    public void invalidContent() {
+    public void emptyContent() {
         post.setContent(null);
         assertFalse(dbH.persistInATransaction(post));
         post.setContent("");
         assertFalse(dbH.persistInATransaction(post));
+    }
+
+    @Test
+    public void maxContentLength() {
+        String content = generateContent(50000);
+        post.setContent(content);
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals(content, post.getContent());
+
         post.setContent(generateContent(50001));
         assertFalse(dbH.persistInATransaction(post));
     }
