@@ -1,4 +1,5 @@
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Post {
     public static final String SUM_POSTS_IN_NORWAY = "SUM_POSTS_IN_NORWAY";
 
     @Id @GeneratedValue private Long id;
-    @ManyToOne private User author;
+    @NotNull @ManyToOne private User author;
     @NotEmpty @Column(length = 50000) private String content;
     @Past private Date date;
     private int upVotes;

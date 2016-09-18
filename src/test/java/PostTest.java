@@ -9,8 +9,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class PostTest {
-    private static DBHelper dbH;
     private static EntityManager em;
+    private static DBHelper dbH;
     private static User user;
     private Post post;
 
@@ -75,7 +75,7 @@ public class PostTest {
     public void setComment() {
         List<Comment> comments = new ArrayList<Comment>();
         assertEquals(comments, post.getComments());
-        Comment comment = new Comment();
+        Comment comment = new Comment(user, "content");
         dbH.persistInATransaction(comment);
         comments.add(comment);
         post.setComments(comments);
