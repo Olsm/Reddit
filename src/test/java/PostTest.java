@@ -2,7 +2,6 @@ import org.junit.*;
 
 import javax.persistence.EntityManager;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,12 +11,15 @@ import static org.junit.Assert.*;
 public class PostTest {
     private static DBHelper dbH;
     private static EntityManager em;
+    private static User user;
     private Post post;
 
     @BeforeClass
     public static void setUpBefore() throws Exception {
         dbH = new DBHelper();
         em = dbH.getEntityManager();
+        user = new User("Shiba");
+        dbH.persistInATransaction(user);
     }
 
     @AfterClass
@@ -27,17 +29,17 @@ public class PostTest {
 
     @Before
     public void setUp() {
-        post = new Post();
+        post = new Post(user, "content");
         dbH.persistInATransaction(post);
     }
 
     @Test
-    public void testPostConstructor() {
+    public void postConstructor() {
         User user = new User("SuchUser");
         dbH.persistInATransaction(user);
         Post post = new Post(user, "Much content");
         assertTrue(dbH.persistInATransaction(post));
-        assertEquals("SuchUser", post.getAuthor().getUsername());
+        assertEquals("suchuser", post.getAuthor().getUsername());
         assertEquals("Much content", post.getContent());
         assertTrue(new Date().getTime() >= post.getDate().getTime());
         assertEquals(0, post.getVotes());
@@ -45,9 +47,14 @@ public class PostTest {
 
     @Test
     public void setContent() throws Exception {
-        post.setContent("Much content");
+        String content = "Much content";
+        post.setContent(content);
         assertTrue(dbH.persistInATransaction(post));
-        assertEquals("Much content", post.getContent());
+        assertEquals(content, post.getContent());
+        content = generateContent(50000);
+        post.setContent(content);
+        assertTrue(dbH.persistInATransaction(post));
+        assertEquals(content, post.getContent());
     }
 
     @Test
@@ -78,6 +85,21 @@ public class PostTest {
         post.setComments(comments);
         assertTrue(dbH.persistInATransaction(post));
         assertEquals(comments, post.getComments());
+    }
+
+    @Test
+    public void invalidContent() {
+        post.setContent(null);
+        assertFalse(dbH.persistInATransaction(post));
+        post.setContent("");
+        assertFalse(dbH.persistInATransaction(post));
+        post.setContent(generateContent(50001));
+        assertFalse(dbH.persistInATransaction(post));
+    }
+
+    // Source: http://stackoverflow.com/a/4903603
+    public String generateContent(int numberOfChars) {
+        return new String(new char[numberOfChars]).replace("\0", "a");
     }
 
 }

@@ -1,4 +1,7 @@
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,15 +17,13 @@ public class Post {
     public static final String SUM_POSTS = "SUM_POSTS";
     public static final String SUM_POSTS_IN_NORWAY = "SUM_POSTS_IN_NORWAY";
 
-    @Id @GeneratedValue
-    private Long id;
+    @Id @GeneratedValue private Long id;
     @ManyToOne private User author;
-    private String content;
-    private Date date;
+    @NotNull @Column(length = 50000) private String content;
+    @Past private Date date;
     private int upVotes;
     private int downVotes;
-    @OneToMany
-    private List<Comment> comments;
+    @OneToMany private List<Comment> comments;
 
     public Post() {
         this(null, null);
