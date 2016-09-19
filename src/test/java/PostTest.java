@@ -1,5 +1,6 @@
 import org.junit.*;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
 import java.util.ArrayList;

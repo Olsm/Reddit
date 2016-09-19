@@ -64,7 +64,9 @@ public class NamedQueriesTest {
         int result = ((Number)query.getSingleResult()).intValue();
         assertEquals(0, result);
 
-        dbH.persistInATransaction(new Post());
+        User user = new User("SuchUser");
+        dbH.persistInATransaction(user);
+        dbH.persistInATransaction(new Post(user, "content"));
         result = ((Number)query.getSingleResult()).intValue();
         assertEquals(1, result);
     }
@@ -77,7 +79,7 @@ public class NamedQueriesTest {
 
         User user = new User("SuchUser", new Address("Oslo", "Norway"), "Shiba", "shiba@inu.wow");
         dbH.persistInATransaction(user);
-        dbH.persistInATransaction(new Post(user, ""));
+        dbH.persistInATransaction(new Post(user, "content"));
         result = ((Number)query.getSingleResult()).intValue();
         assertEquals(1, result);
     }
@@ -90,10 +92,9 @@ public class NamedQueriesTest {
         assertEquals(0, users.size());
 
         for (int i = 0; i < 11; i++) {
-            dbH.persistInATransaction(new User());
+            dbH.persistInATransaction(new User("Shiba" + i));
         }
-
-        User user = new User();
+        User user = new User("SuchUser");
         dbH.persistInATransaction(user);
         Post post = new Post(user, "");
         dbH.persistInATransaction(post);

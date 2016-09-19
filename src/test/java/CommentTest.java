@@ -10,12 +10,15 @@ import static org.junit.Assert.*;
 public class CommentTest {
     private static DBHelper dbH;
     private static EntityManager em;
+    private static User user;
     private Comment comment;
 
     @BeforeClass
     public static void setUpBefore() throws Exception {
         dbH = new DBHelper();
         em = dbH.getEntityManager();
+        user = new User("Shiba");
+        dbH.persistInATransaction(user);
     }
 
     @AfterClass
@@ -25,15 +28,17 @@ public class CommentTest {
 
     @Before
     public void setUp() {
-        comment = new Comment();
+        comment = new Comment(user, "content");
         dbH.persistInATransaction(comment);
     }
 
     @Test
     public void testCommentConstructor() {
-        Comment comment = new Comment("SuchUser", "Much content");
+        User user = new User("SuchUser");
+        dbH.persistInATransaction(user);
+        Comment comment = new Comment(user, "Much content");
         assertTrue(dbH.persistInATransaction(comment));
-        assertEquals("SuchUser", comment.getAuthor());
+        assertEquals(user, comment.getAuthor());
         assertEquals("Much content", comment.getContent());
         assertTrue(new Date().getTime() >= comment.getDate().getTime() );
         assertEquals(0, comment.getVotes());
@@ -64,7 +69,7 @@ public class CommentTest {
     public void setComment() {
         List<Comment> comments = new ArrayList<Comment>();
         assertEquals(comments, comment.getComments());
-        Comment commentComment = new Comment();
+        Comment commentComment = new Comment(user, "content");
         dbH.persistInATransaction(commentComment);
         comments.add(commentComment);
         comment.setComments(comments);
