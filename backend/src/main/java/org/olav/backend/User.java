@@ -1,3 +1,5 @@
+package org.olav.backend;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;

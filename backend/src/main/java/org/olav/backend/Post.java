@@ -1,3 +1,5 @@
+package org.olav.backend;
+
 import javax.persistence.*;
 
 @NamedQueries({

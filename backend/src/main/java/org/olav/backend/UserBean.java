@@ -1,3 +1,5 @@
+package org.olav.backend;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

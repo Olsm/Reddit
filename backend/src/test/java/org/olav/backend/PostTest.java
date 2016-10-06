@@ -1,3 +1,5 @@
+package org.olav.backend;
+
 import org.junit.*;
 
 import javax.persistence.Entity;
