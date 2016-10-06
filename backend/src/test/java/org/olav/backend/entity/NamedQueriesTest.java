@@ -1,6 +1,10 @@
-package org.olav.backend;
+package org.olav.backend.entity;
 
 import org.junit.*;
+import org.olav.backend.db.DBHelper;
+import org.olav.backend.entity.Address;
+import org.olav.backend.entity.Post;
+import org.olav.backend.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

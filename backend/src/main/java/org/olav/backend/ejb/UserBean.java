@@ -1,4 +1,7 @@
-package org.olav.backend;
+package org.olav.backend.ejb;
+
+import org.olav.backend.entity.Address;
+import org.olav.backend.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

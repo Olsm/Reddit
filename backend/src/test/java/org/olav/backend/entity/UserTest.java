@@ -1,13 +1,11 @@
-package org.olav.backend;
+package org.olav.backend.entity;
 
 import org.junit.*;
+import org.olav.backend.db.DBHelper;
+import org.olav.backend.entity.Address;
+import org.olav.backend.entity.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 

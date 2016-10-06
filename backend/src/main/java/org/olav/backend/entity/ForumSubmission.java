@@ -1,6 +1,8 @@
-package org.olav.backend;
+package org.olav.backend.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.olav.backend.entity.Comment;
+import org.olav.backend.entity.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
