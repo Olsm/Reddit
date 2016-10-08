@@ -90,6 +90,7 @@ public class NamedQueriesTest {
         assertEquals(1, result);
     }
 
+    /*
     @Test
     public void testTopTenUsers(){
         Query query = em.createNamedQuery(User.TOP_TEN_USERS);
@@ -108,5 +109,5 @@ public class NamedQueriesTest {
         users = query.getResultList();
         assertEquals(10, users.size());
         assertEquals(user, users.get(0));
-    }
+    } */
 }

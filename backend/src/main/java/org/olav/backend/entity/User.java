@@ -8,8 +8,8 @@ import org.hibernate.validator.constraints.Email;
         @NamedQuery(name = User.SUM_USERS, query = "select count(u) from User u"),
         @NamedQuery(name = User.SUM_USERS_IN_COUNTRY, query = "select count(u) from User u where u.address.country = :country"),
         @NamedQuery(name = User.GET_COUNTRIES, query = "select u.address.country from User u"),
-        @NamedQuery(name = User.TOP_TEN_USERS, query = "select u from Post p, Comment c left join p.author as u " +
-                                                           "group by u order by count(p) + count(c)")
+        //@NamedQuery(name = User.TOP_TEN_USERS, query = "select u from Post p, Comment c left join p.author as u " +
+        //                                                   "group by u order by count(p) + count(c)")
         //@NamedQuery(name = User.TOP_TEN_USERS, query = "select count(p) as posts " +
         //        "from Post p join p.author order by posts")
         //@NamedQuery(name = User.TOP_TEN_USERS, query = "select u, count(p) as posts, count(c) as comments " +

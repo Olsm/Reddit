@@ -3,14 +3,13 @@ package org.olav.backend.ejb;
 import org.olav.backend.entity.Address;
 import org.olav.backend.entity.User;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 
-@EJB @Stateless
+@Stateless
 public class UserBean {
 
     //Dependency injection: the container will add it

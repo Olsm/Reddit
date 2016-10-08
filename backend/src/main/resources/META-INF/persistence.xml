@@ -9,7 +9,7 @@
 
 
 
-    <persistence-unit name="DB" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="DB" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
