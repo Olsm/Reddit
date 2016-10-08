@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CommentTest {
+public class CommentTestNot {
     private static DBHelper dbH;
     private static EntityManager em;
     private static User user;

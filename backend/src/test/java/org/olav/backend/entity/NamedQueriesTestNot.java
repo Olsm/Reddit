@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class NamedQueriesTest {
+public class NamedQueriesTestNot {
     private DBHelper dbH;
     private EntityManager em;
 

@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 
 import static org.junit.Assert.*;
 
-public class AddressTest {
+public class AddressTestNot {
     private static DBHelper dbH;
     private static EntityManager em;
     private static User user;

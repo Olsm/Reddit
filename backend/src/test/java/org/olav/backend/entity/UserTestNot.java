@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 import static org.junit.Assert.*;
 
-public class UserTest {
+public class UserTestNot {
     private static DBHelper dbH;
     private static EntityManager em;
     private static int userNameCounter = 0;

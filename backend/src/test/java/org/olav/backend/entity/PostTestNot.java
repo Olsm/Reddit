@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class PostTest {
+public class PostTestNot {
     private static EntityManager em;
     private static DBHelper dbH;
     private static User user;
