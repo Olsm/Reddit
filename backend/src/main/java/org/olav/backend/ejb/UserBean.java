@@ -19,22 +19,27 @@ public class UserBean {
     public UserBean(){}
 
     //all methods in a EJB are wrapped in a transaction, with automated rollback if exceptions
-    public void registerNewUser(@NotNull String username, @NotNull String email, String name, Address address){
+    public User registerNewUser(@NotNull String username, @NotNull String email, String name, Address address){
         if(isRegistered(username)){
-            return;
+            return null;
         }
 
         User user = new User(username, address, name, email);
         em.persist(user);
+        return user;
     }
 
     public boolean isRegistered(@NotNull String username){
-        return em.find(User.class, username) != null;
+        return getUser(username) != null;
     }
 
     public long getNumberOfUsers(){
         Query query = em.createQuery("select count(u) from User u");
         return (Long) query.getSingleResult();
+    }
+
+    public User getUser(@NotNull String username) {
+        return em.find(User.class, username.toLowerCase());
     }
 
 }

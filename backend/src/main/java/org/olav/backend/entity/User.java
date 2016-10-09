@@ -76,4 +76,18 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!User.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final User other = (User) obj;
+        if ((this.getUsername() == null) ? (other.getUsername() != null) : !this.getUsername().equals(other.getUsername())) {
+            return false;
+        }
+        return true;
+    }
 }
