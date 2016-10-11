@@ -23,7 +23,7 @@ public class ForumSubmission {
     private Date date;
     private int upVotes;
     private int downVotes;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
 
     public ForumSubmission() {
@@ -71,6 +71,8 @@ public class ForumSubmission {
         this.comments = comments;
     }
 
+    public void addComment(Comment comment) {comments.add(comment);}
+
     public void upVote() {
         this.upVotes++;
     }
@@ -85,5 +87,20 @@ public class ForumSubmission {
 
     public int getDownVotes() {
         return downVotes;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!ForumSubmission.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final ForumSubmission other = (ForumSubmission) obj;
+        if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId())) {
+            return false;
+        }
+        return true;
     }
 }
