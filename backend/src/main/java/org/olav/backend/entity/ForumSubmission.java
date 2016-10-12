@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ForumSubmission {
         this.date = new Date();
         this.upVotes = 0;
         this.downVotes = 0;
-        comments = new ArrayList<Comment>();
+        comments = Collections.synchronizedList(new ArrayList<Comment>());
     }
 
     public Long getId() {
@@ -47,7 +48,7 @@ public class ForumSubmission {
         return author;
     }
 
-    public List<Comment> getComments() {
+    public synchronized List<Comment> getComments() {
         return comments;
     }
 
@@ -71,7 +72,7 @@ public class ForumSubmission {
         this.comments = comments;
     }
 
-    public void addComment(Comment comment) {comments.add(comment);}
+    public synchronized void addComment(Comment comment) {comments.add(comment);}
 
     public void upVote() {
         this.upVotes++;

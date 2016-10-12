@@ -47,7 +47,8 @@ public class CommentBeanTest {
 
     @Test
     public void registercomment() throws Exception {
-        Comment parentComment = postBean.registerComment(post, user, content);
+        post = postBean.registerComment(post, user, content);
+        Comment parentComment = post.getComments().get(0);
         Long commentId = commentBean.registerComment(parentComment, user, content).getId();
         Comment comment = commentBean.getComment(commentId);
 

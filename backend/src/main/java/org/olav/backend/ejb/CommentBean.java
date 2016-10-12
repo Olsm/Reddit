@@ -14,7 +14,7 @@ public class CommentBean extends SubmissionBeanBase {
     public CommentBean(){}
 
     public Comment registerComment(Post post, User author, String content) {
-        return super.registerComment(post, author, content);
+        return (Comment) super.registerComment(post, author, content);
     }
 
     public Comment getComment(Long id) {

@@ -11,11 +11,11 @@ public abstract class SubmissionBeanBase {
     @PersistenceContext
     protected EntityManager em;
 
-    public Comment registerComment(ForumSubmission submission, User author, String content) {
+    public ForumSubmission registerComment(ForumSubmission submission, User author, String content) {
         Comment comment = new Comment(author, content);
         em.persist(comment);
         submission.addComment(comment);
         em.merge(submission);
-        return comment;
+        return submission;
     }
 }

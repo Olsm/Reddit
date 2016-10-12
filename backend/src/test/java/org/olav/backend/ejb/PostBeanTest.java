@@ -33,6 +33,7 @@ public class PostBeanTest {
     private UserBean userBean;
 
     private User user;
+    Post post;
     private String content;
     private static int counter;
 
@@ -40,25 +41,35 @@ public class PostBeanTest {
     public void setupBefore() {
         user = userBean.registerNewUser("username" + counter++, "such@mail.com", "Shiba Inu", null);
         content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus volutpat turpis vitae bibendum auctor. Aliquam posuere tempus hendrerit. Sed at leo massa. Aenean eget libero est. Cras semper neque vitae nulla interdum rutrum. Duis est augue, vestibulum et justo eget, commodo consequat nulla. Sed elit libero, tincidunt eget finibus quis, cursus non ex. Nam in luctus ante. Quisque odio orci, scelerisque vel fringilla eget, suscipit ut sapien. Vivamus elementum eros vitae risus imperdiet aliquet. In ac dui sem. Morbi quis eros eleifend, feugiat tellus sed, malesuada massa.";
+        post = postBean.registerPost(user, content);
     }
 
     @Test
     public void registerPost() throws Exception {
-        Post post = postBean.registerPost(user, content);
-        //assertEquals(user, userBean.getUser(username));
         assertEquals(user, post.getAuthor());
         assertEquals(content, post.getContent());
     }
 
     @Test
     public void registerComment() throws Exception {
-        Post post = postBean.registerPost(user, content);
-        Comment comment = postBean.registerComment(post, user, content);
-
+        post = postBean.registerComment(post, user, content);
+        Comment comment = post.getComments().get(0);
         assertEquals(user, comment.getAuthor());
         assertEquals(content, comment.getContent());
         assertEquals(1, post.getComments().size());
         assertEquals(comment, post.getComments().get(0));
+    }
+
+    //ToDo: Fix concurrency issue
+    @Test
+    public void registerCommentConcurrency() {
+        int numberOfComments = post.getComments().size();
+        for (int i = 0; i < 100; i++) {
+            Runnable task = () -> { post = postBean.registerComment(post, user, content); };
+            new Thread(task).start();
+        }
+        assertEquals(100, post.getComments().size());
+        assertEquals(100, postBean.getPost(post.getId()).getComments().size());
     }
 
     @Test

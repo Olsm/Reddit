@@ -1,12 +1,9 @@
 package org.olav.backend.ejb;
 import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.ForumSubmission;
 import org.olav.backend.entity.Post;
 import org.olav.backend.entity.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
@@ -20,8 +17,8 @@ public class PostBean extends SubmissionBeanBase {
         return post;
     }
 
-    public Comment registerComment(Post post, User author, String content) {
-        return super.registerComment(post, author, content);
+    public Post registerComment(Post post, User author, String content) {
+        return getPost(super.registerComment(post, author, content).getId());
     }
 
     public Post getPost(Long id) {
