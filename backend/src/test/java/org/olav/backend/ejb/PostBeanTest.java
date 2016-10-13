@@ -52,13 +52,8 @@ public class PostBeanTest {
     }
 
     @Test
-    public void registerComment() throws Exception {
-        post = postBean.registerComment(post, user, content);
-        Comment comment = post.getComments().get(0);
-        assertEquals(user, comment.getAuthor());
-        assertEquals(content, comment.getContent());
-        assertEquals(1, post.getComments().size());
-        assertEquals(comment, post.getComments().get(0));
+    public void getPost() {
+        assertEquals(post, postBean.getPost(post.getId()));
     }
 
     //ToDo: Fix concurrency issue

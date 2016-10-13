@@ -18,4 +18,14 @@ public abstract class SubmissionBeanBase {
         em.merge(submission);
         return submission;
     }
+
+    public ForumSubmission upvote(ForumSubmission submission) {
+        submission.upVote();
+        return submission;
+    }
+
+    public ForumSubmission downVote(ForumSubmission submission) {
+        submission.downVote();
+        return submission;
+    }
 }

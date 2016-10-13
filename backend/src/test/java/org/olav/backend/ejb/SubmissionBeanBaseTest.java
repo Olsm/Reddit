@@ -13,43 +13,63 @@ import org.olav.backend.entity.User;
 
 import javax.ejb.EJB;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
-public class CommentBeanTest {
+public class SubmissionBeanBaseTest {
 
     @Deployment
     public static JavaArchive createDeployment() {
 
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackages(true, "org.olav.backend.entity", "org.olav.backend.ejb")
+                .addPackages(true, "org.olav.backend.ejb","org.olav.backend.entity")
                 .addAsResource("META-INF/persistence.xml");
     }
 
     @EJB
-    private CommentBean commentBean;
+    private PostBean postBean;
     @EJB
     private UserBean userBean;
-    @EJB
-    private PostBean postBean;
 
     private User user;
-    private Post post;
+    Post post;
     private String content;
     private static int counter;
 
     @Before
     public void setupBefore() {
         user = userBean.registerNewUser("username" + counter++, "such@mail.com", "Shiba Inu", null);
-        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus volutpat turpis vitae bibendum auctor. Aliquam posuere tempus hendrerit. Sed at leo massa. Aenean eget libero est. Cras semper neque vitae nulla interdum rutrum. Duis est augue, vestibulum et justo eget, commodo consequat nulla. Sed elit libero, tincidunt eget finibus quis, cursus non ex. Nam in luctus ante. Quisque odio orci, scelerisque vel fringilla eget, suscipit ut sapien. Vivamus elementum eros vitae risus imperdiet aliquet. In ac dui sem. Morbi quis eros eleifend, feugiat tellus sed, malesuada massa.";
+        content = "test";
         post = postBean.registerPost(user, content);
-        post = postBean.registerComment(post, user, "Very comment");
+    }
+
+
+    @Test
+    public void registerComment() throws Exception {
+        post = postBean.registerComment(post, user, content);
+        Comment comment = post.getComments().get(0);
+        assertEquals(user, comment.getAuthor());
+        assertEquals(content, comment.getContent());
+        assertEquals(1, post.getComments().size());
+        assertEquals(comment, post.getComments().get(0));
     }
 
     @Test
-    public void testGetComment() {
-        Comment comment = post.getComments().get(0);
-        assertEquals(comment, commentBean.getComment(comment.getId()));
+    public void upVote() {
+        int votes = post.getVotes();
+        assertEquals(0, post.getUpVotes());
+        post.upVote();
+        assertEquals(1, post.getUpVotes());
+        assertEquals(votes + 1, post.getVotes());
+    }
+
+    @Test
+    public void downVote() {
+        int votes = post.getVotes();
+        assertEquals(0, post.getDownVotes());
+        post.downVote();
+        assertEquals(1, post.getDownVotes());
+        assertEquals(votes - 1, post.getVotes());
     }
 
 }
