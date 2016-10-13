@@ -2,6 +2,7 @@ package org.olav.backend.ejb;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.spi.ArquillianProxyException;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.olav.backend.entity.Address;
 import org.olav.backend.entity.User;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,7 +33,6 @@ public class UserBeanTest {
     public void testRegisterNewUser() {
         String username = "SuchUserName";
         User user = userBean.registerNewUser(username, "shiba@inu.wow", "Very Name", new Address("City", "Country"));
-        assertEquals(user, userBean.getUser(username));
         assertEquals(username.toLowerCase(), user.getUsername());
         assertEquals("City", user.getAddress().getCity());
         assertEquals("Country", user.getAddress().getCountry());
@@ -41,8 +42,60 @@ public class UserBeanTest {
 
     @Test
     public void testGetNumberOfUsers() {
-        assertEquals(0, userBean.getNumberOfUsers());
+        Long users = userBean.getNumberOfUsers();
         userBean.registerNewUser("suchUser", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
-        assertEquals(1, userBean.getNumberOfUsers());
+        assertEquals(users+1, userBean.getNumberOfUsers());
+    }
+
+    @Test(expected = ArquillianProxyException.class)
+    public void testUserMustHaveUsername() {
+        userBean.registerNewUser(null, "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testUserCannotBeEmpty() {
+        userBean.registerNewUser("   ", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testUserMustBeMin3Chars() {
+        userBean.registerNewUser("12", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    public void testUserWithMinChars() {
+        userBean.registerNewUser("123", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testUserMustBeMax15Chars() {
+        userBean.registerNewUser("1234567890123456", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    public void testUserWithMaxChars() {
+        userBean.registerNewUser("123456789012345", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testUserWithInvalidSpecialChar() {
+        userBean.registerNewUser("123*abc", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    public void testUserWithValidSpecialChars() {
+        userBean.registerNewUser("1_2-3", "shiba@inu.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testEmailWithoutDomain() {
+        userBean.registerNewUser("invalidEmail1", "invalid@email", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testEmailWithoutAt() {
+        userBean.registerNewUser("invalidEmail2", "invalidemail.wow", "Very Name", new Address("City", "Country"));
+    }
+
+    @Test(expected = EJBException.class)
+    public void testEmailWithoutAtAndDomain() {
+        userBean.registerNewUser("invalidemail3", "invalidemail", "Very Name", new Address("City", "Country"));
     }
 }

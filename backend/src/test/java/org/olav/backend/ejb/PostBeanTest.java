@@ -13,6 +13,7 @@ import org.olav.backend.entity.Post;
 import org.olav.backend.entity.User;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 
 import static org.junit.Assert.*;
 
@@ -77,6 +78,16 @@ public class PostBeanTest {
         Long posts = postBean.getNumberOfPosts();
         postBean.registerPost(user, content);
         assertEquals(posts + 1, postBean.getNumberOfPosts());
+    }
+
+    @Test(expected = EJBException.class)
+    public void testContentLongerThanLimit() {
+        postBean.registerPost(user, new String(new char[50001]).replace('\0', ' '));
+    }
+
+    @Test
+    public void testContentLengthLimit() {
+        postBean.registerPost(user, new String(new char[50000]).replace('\0', ' '));
     }
 
 }
