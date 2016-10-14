@@ -1,8 +1,8 @@
-package org.olav.backend.ejb;
+package org.olav.backend.businesslayer;
 
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.ForumSubmission;
-import org.olav.backend.entity.User;
+import org.olav.backend.datalayer.Comment;
+import org.olav.backend.datalayer.ForumSubmission;
+import org.olav.backend.datalayer.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

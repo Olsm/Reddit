@@ -1,4 +1,4 @@
-package org.olav.backend.ejb;
+package org.olav.backend.businesslayer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -7,9 +7,9 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.Post;
-import org.olav.backend.entity.User;
+import org.olav.backend.datalayer.Comment;
+import org.olav.backend.datalayer.Post;
+import org.olav.backend.datalayer.User;
 
 import javax.ejb.EJB;
 
@@ -22,7 +22,7 @@ public class CommentBeanTest {
     public static JavaArchive createDeployment() {
 
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackages(true, "org.olav.backend.entity", "org.olav.backend.ejb")
+                .addPackages(true, "org.olav.backend.datalayer", "org.olav.backend.businesslayer")
                 .addAsResource("META-INF/persistence.xml");
     }
 

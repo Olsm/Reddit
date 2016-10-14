@@ -1,7 +1,6 @@
-package org.olav.backend.entity;
+package org.olav.backend.datalayer;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 

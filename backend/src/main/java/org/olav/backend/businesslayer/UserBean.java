@@ -1,7 +1,7 @@
-package org.olav.backend.ejb;
+package org.olav.backend.businesslayer;
 
-import org.olav.backend.entity.Address;
-import org.olav.backend.entity.User;
+import org.olav.backend.datalayer.Address;
+import org.olav.backend.datalayer.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,9 +33,9 @@ public class UserBean {
         return getUser(username) != null;
     }
 
-    public long getNumberOfUsers(){
+    public int getNumberOfUsers(){
         Query query = em.createQuery("select count(u) from User u");
-        return (Long) query.getSingleResult();
+        return ((Number)query.getSingleResult()).intValue();
     }
 
     public User getUser(@NotNull String username) {

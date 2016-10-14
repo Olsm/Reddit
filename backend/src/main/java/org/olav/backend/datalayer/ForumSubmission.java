@@ -1,9 +1,6 @@
-package org.olav.backend.entity;
+package org.olav.backend.datalayer;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -24,7 +21,7 @@ public class ForumSubmission {
     private Date date;
     private int upVotes;
     private int downVotes;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     public ForumSubmission() {

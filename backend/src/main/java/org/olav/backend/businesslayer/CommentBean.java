@@ -1,12 +1,11 @@
-package org.olav.backend.ejb;
+package org.olav.backend.businesslayer;
 
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.Post;
-import org.olav.backend.entity.User;
+import org.olav.backend.datalayer.Comment;
+import org.olav.backend.datalayer.Post;
+import org.olav.backend.datalayer.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class CommentBean extends SubmissionBeanBase {
@@ -22,4 +21,8 @@ public class CommentBean extends SubmissionBeanBase {
     }
 
 
+    public int getNumberOfComments() {
+        Query query = em.createNamedQuery(Comment.SUM_COMMENTS);
+        return ((Number)query.getSingleResult()).intValue();
+    }
 }

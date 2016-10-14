@@ -1,7 +1,6 @@
-package org.olav.backend.ejb;
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.Post;
-import org.olav.backend.entity.User;
+package org.olav.backend.businesslayer;
+import org.olav.backend.datalayer.Post;
+import org.olav.backend.datalayer.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -18,14 +17,14 @@ public class PostBean extends SubmissionBeanBase {
     }
 
     public Post registerComment(Post post, User author, String content) {
-        return getPost(super.registerComment(post, author, content).getId());
+        return (Post) super.registerComment(post, author, content);
     }
 
     public Post getPost(Long id) {
         return em.find(Post.class, id);
     }
 
-    public long getNumberOfPosts(){
+    public int getNumberOfPosts(){
         Query query = em.createNamedQuery(Post.SUM_POSTS);
         return ((Number)query.getSingleResult()).intValue();
     }

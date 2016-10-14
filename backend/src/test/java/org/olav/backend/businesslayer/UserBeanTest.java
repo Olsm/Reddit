@@ -1,4 +1,4 @@
-package org.olav.backend.ejb;
+package org.olav.backend.businesslayer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -7,8 +7,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.olav.backend.entity.Address;
-import org.olav.backend.entity.User;
+import org.olav.backend.datalayer.Address;
+import org.olav.backend.datalayer.User;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;

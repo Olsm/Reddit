@@ -1,10 +1,7 @@
-package org.olav.backend.entity;
+package org.olav.backend.datalayer;
 
 import org.junit.*;
 import org.olav.backend.db.DBHelper;
-import org.olav.backend.entity.Comment;
-import org.olav.backend.entity.Post;
-import org.olav.backend.entity.User;
 
 import javax.persistence.EntityManager;
 

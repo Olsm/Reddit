@@ -1,4 +1,4 @@
-package org.olav.backend.entity;
+package org.olav.backend.datalayer;
 
 import javax.persistence.*;
 
