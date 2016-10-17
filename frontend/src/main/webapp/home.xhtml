@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+>
+
+<ui:composition template="layout.xhtml">
+
+    <ui:define name="title">Reddit Home Page</ui:define>
+
+    <ui:define name="content">
+
+
+        <c:if test="#{userController.loggedIn}">
+            <h:button value="Create Post" outcome="newPost.xhtml" id="createPost"/>
+        </c:if>
+
+
+        <h2>Posts</h2>
+
+        <c:choose>
+            <c:when test="#{postController.posts.size() == 0}">
+                <h:outputText value="No posts yet :( Be the first to create one!"/>
+            </c:when>
+
+            <c:otherwise>
+
+                <h:dataTable value="#{postController.posts}" var="post" border="1" id="postTable">
+                    <h:column>
+                        <f:facet name="header">Title</f:facet>
+                        <h:outputText value="#{post.title}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Author</f:facet>
+                        <h:outputText value="#{post.author.username}"/>
+                    </h:column>
+
+                </h:dataTable>
+            </c:otherwise>
+        </c:choose>
+
+    </ui:define>
+
+</ui:composition>
+</html>

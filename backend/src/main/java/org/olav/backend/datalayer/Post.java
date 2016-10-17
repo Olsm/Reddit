@@ -13,10 +13,10 @@ public class Post extends ForumSubmission {
     public static final String SUM_POSTS = "SUM_POSTS";
     public static final String SUM_POSTS_IN_NORWAY = "SUM_POSTS_IN_NORWAY";
 
-    public Post() {this(null, null);}
+    public Post() {this(null, null, null);}
 
-    public Post(User author, String content) {
-        super(author, content);
+    public Post(User author, String title, String content) {
+        super(author,  title, content);
     }
 
 }

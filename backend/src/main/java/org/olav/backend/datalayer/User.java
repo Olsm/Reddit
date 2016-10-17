@@ -2,7 +2,10 @@ package org.olav.backend.datalayer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @NamedQueries({
         @NamedQuery(name = User.SUM_USERS, query = "select count(u) from User u"),
@@ -26,7 +29,12 @@ public class User {
 
     @Id @Pattern(regexp = "^(?i)[A-Z0-9_-]{3,15}$")
     private String username;
-    @Embedded private Address address;
+    @NotEmpty @Size(max = 26)
+    private String salt;
+    @NotEmpty
+    private String hash;
+    @Embedded
+    private Address address;
     private String name;
     @Email @Pattern(regexp = ".*?\\.(?i)[A-Z0-9].*") // valid email must end with .something
     private String email;
@@ -77,4 +85,19 @@ public class User {
     }
 
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 }

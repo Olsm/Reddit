@@ -2,6 +2,7 @@ package org.olav.backend.datalayer;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class ForumSubmission {
     private Long id;
     @NotNull @ManyToOne
     private User author;
+    @Max(100)
+    private String title;
     @NotEmpty @Column(length = 50000)
     private String content;
     @Past
@@ -25,11 +28,12 @@ public class ForumSubmission {
     private List<Comment> comments;
 
     public ForumSubmission() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    public ForumSubmission(User author, String content) {
+    public ForumSubmission(User author, String title, String content) {
         this.author = author;
+        this.title = title;
         this.content = content;
         this.date = new Date();
         this.upVotes = 0;

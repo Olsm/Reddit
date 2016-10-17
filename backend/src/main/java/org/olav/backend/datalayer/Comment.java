@@ -16,6 +16,6 @@ public class Comment extends ForumSubmission {
     }
 
     public Comment(User author, String content) {
-        super(author, content);
+        super(author, null, content);
     }
 }

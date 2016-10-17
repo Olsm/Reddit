@@ -4,14 +4,15 @@ import org.olav.backend.datalayer.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import java.util.List;
 
 @Stateless
 public class PostBean extends SubmissionBeanBase {
 
     public PostBean(){}
 
-    public Post registerPost(User author, String content) {
-        Post post = new Post(author, content);
+    public Post registerPost(User author, String title, String content) {
+        Post post = new Post(author, title, content);
         em.persist(post);
         return post;
     }
@@ -29,4 +30,8 @@ public class PostBean extends SubmissionBeanBase {
         return ((Number)query.getSingleResult()).intValue();
     }
 
+    public List<Post> getAll() {
+        Query query = em.createQuery("SELECT p FROM Post p");
+        return (List<Post>) query.getResultList();
+    }
 }

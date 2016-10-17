@@ -32,7 +32,7 @@ public class PostTestNot {
 
     @Before
     public void setUp() {
-        post = new Post(user, "content");
+        post = new Post(user, "password", "content");
         dbH.persistInATransaction(post);
     }
 
@@ -40,7 +40,7 @@ public class PostTestNot {
     public void postConstructor() {
         User user = new User("SuchUser");
         dbH.persistInATransaction(user);
-        Post post = new Post(user, "Much content");
+        Post post = new Post(user, "password", "Much content");
         assertTrue(dbH.persistInATransaction(post));
         assertEquals("suchuser", post.getAuthor().getUsername());
         assertEquals("Much content", post.getContent());

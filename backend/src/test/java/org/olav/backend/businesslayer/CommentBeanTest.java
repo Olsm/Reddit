@@ -40,9 +40,9 @@ public class CommentBeanTest {
 
     @Before
     public void setupBefore() {
-        user = userBean.registerNewUser("username" + counter++, "such@mail.com", "Shiba Inu", null);
+        user = userBean.registerNewUser("username" + counter++, "password", "such@mail.com", "Shiba Inu", null);
         content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus volutpat turpis vitae bibendum auctor. Aliquam posuere tempus hendrerit. Sed at leo massa. Aenean eget libero est. Cras semper neque vitae nulla interdum rutrum. Duis est augue, vestibulum et justo eget, commodo consequat nulla. Sed elit libero, tincidunt eget finibus quis, cursus non ex. Nam in luctus ante. Quisque odio orci, scelerisque vel fringilla eget, suscipit ut sapien. Vivamus elementum eros vitae risus imperdiet aliquet. In ac dui sem. Morbi quis eros eleifend, feugiat tellus sed, malesuada massa.";
-        post = postBean.registerPost(user, content);
+        post = postBean.registerPost(user, "title", content);
         post = postBean.registerComment(post, user, "Very comment");
     }
 

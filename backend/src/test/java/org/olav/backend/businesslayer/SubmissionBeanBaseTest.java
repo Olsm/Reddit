@@ -38,9 +38,9 @@ public class SubmissionBeanBaseTest {
 
     @Before
     public void setupBefore() {
-        user = userBean.registerNewUser("username" + counter++, "such@mail.com", "Shiba Inu", null);
+        user = userBean.registerNewUser("username" + counter++, "password", "such@mail.com", "Shiba Inu", null);
         content = "test";
-        post = postBean.registerPost(user, content);
+        post = postBean.registerPost(user, "title", content);
     }
 
 
